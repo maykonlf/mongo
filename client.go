@@ -9,7 +9,7 @@ import (
 )
 
 func NewClientStore(config *Config) (cs *MongoClientStore) {
-	cs = &MongoClientStore {config: config}
+	cs = &MongoClientStore {config: config, collectionName: "clients"}
 
 	session, err := mgo.Dial(cs.config.URL)
 	if err != nil {
