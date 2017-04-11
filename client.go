@@ -40,14 +40,14 @@ type MongoClientStore struct {
 // GetByID according to the ID for the client information
 func (cs *MongoClientStore) GetByID(id string) (cli oauth2.ClientInfo, err error) {
 	session := cs.session.Copy()
+
 	var client models.Client
 	err = session.DB(cs.config.DB).C(cs.collectionName).Find(bson.M{"id": id}).One(&client)
+	cli = &client
 	if err != nil {
-		cli = &client
-		return
+		err = errors.New("not found")
 	}
 
-	err = errors.New("not found")
 	return
 }
 
